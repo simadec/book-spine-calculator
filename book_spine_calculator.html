@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>책등 간편 계산기</title>
+  <style>
+    body { font-family: 'Noto Sans KR', sans-serif; padding: 2em; background: #f7f7f7; }
+    .container { max-width: 420px; margin: 2em auto; background: #fff; padding: 2em; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.05); }
+    h2 { color: #ff6f00; text-align: center; }
+    label { display: block; margin-top: 1.5em; font-weight: bold; }
+    input, select { width: 100%; padding: 0.7em; margin-top: 0.5em; font-size: 1em; border: 1px solid #ccc; border-radius: 4px; }
+    .result { margin-top: 2em; font-size: 1.3em; text-align: center; color: #333; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>✨ 책등 간편 계산기</h2>
+
+    <label for="pages">페이지 수 (쪽)</label>
+    <input type="number" id="pages" value="72" step="2" min="4">
+
+    <label for="thickness">종이 평량 선택</label>
+    <select id="thickness">
+      <option value="0.103">80g (0.103mm)</option>
+      <option value="0.128">100g (0.128mm)</option>
+      <option value="0.154" selected>120g (0.154mm)</option>
+      <option value="0.180">140g (0.180mm)</option>
+      <option value="0.193">150g (0.193mm)</option>
+    </select>
+
+    <div class="result">
+      책등 두께: <output id="result">0.00</output> mm
+    </div>
+  </div>
+
+  <script>
+    const pages = document.getElementById("pages");
+    const thickness = document.getElementById("thickness");
+    const result = document.getElementById("result");
+
+    function updateSpine() {
+      const sheets = parseInt(pages.value || 0, 10) / 2;
+      const sheetThickness = parseFloat(thickness.value);
+      const spine = (sheets * sheetThickness).toFixed(2);
+      result.textContent = spine;
+    }
+
+    pages.addEventListener("input", updateSpine);
+    thickness.addEventListener("change", updateSpine);
+    updateSpine();
+  </script>
+</body>
+</html>
